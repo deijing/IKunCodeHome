@@ -148,7 +148,7 @@ ikuncode/
 - [ ] 添加 ESLint + Prettier
 - [ ] 集成单元测试（Vitest）
 - [ ] 添加 E2E 测试（Playwright）
-- [ ] 配置 CI/CD
+- [x] 配置 CI/CD (Vercel 自动部署已启用)
 - [ ] 添加更多 SEO 优化（OpenGraph、Twitter Cards）
 
 ## License
