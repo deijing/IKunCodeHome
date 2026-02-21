@@ -43,6 +43,16 @@
     background-size: 200px 200px;
   }
 
+  /* API URL 区域微光扫过动画 */
+  @keyframes shimmer-sweep {
+    0% { transform: translateX(-100%) skewX(-15deg); }
+    100% { transform: translateX(200%) skewX(-15deg); }
+  }
+
+  .animate-shimmer {
+    animation: shimmer-sweep 5s ease-in-out infinite;
+  }
+
   /* 自定义滚动条样式 */
   .scrollbar-thin::-webkit-scrollbar {
     width: 6px;

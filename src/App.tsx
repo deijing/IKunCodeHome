@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowRight,
+  Check,
   ChevronRight,
   Code2,
   Copy,
@@ -528,7 +529,7 @@ export default function App() {
 
             <div className="flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-20 items-start lg:items-center justify-between">
               <Container delay={0.2}>
-                <div className="max-w-xl space-y-4 sm:space-y-6 lg:space-y-8">
+                <div className="max-w-2xl space-y-4 sm:space-y-6 lg:space-y-8">
                   <p className="text-xl sm:text-2xl md:text-3xl font-light leading-snug tracking-tight">
                     {t.hero.subtitle}
                     <span className="font-bold border-b border-amber-500/30">{lang === 'zh' ? '中转站' : ' Developers'}</span>
@@ -570,66 +571,157 @@ export default function App() {
 
                   {/* API URL 配置展示区域 */}
                   <div className="mt-14 sm:mt-8 lg:mt-20">
-                    <p className="text-xs sm:text-sm font-medium opacity-60 mb-3 sm:mb-4">替换基础 URL 即可接入</p>
-                    <div
-                      className={`relative flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-5 rounded-xl sm:rounded-2xl border ${
-                        isDarkMode
-                          ? 'bg-white/[0.03] border-white/[0.08] hover:border-white/[0.15]'
-                          : 'bg-zinc-100/50 border-black/10 hover:border-amber-500/30'
-                      } transition-all group overflow-hidden`}
-                    >
-                      <div className="flex items-center gap-2 sm:gap-3 flex-1 overflow-hidden">
-                        <code className={`text-xs sm:text-sm lg:text-base font-mono ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'} truncate`}>
-                          https://api.ikuncode.cc
-                        </code>
-                        <div className="relative h-5 sm:h-6 min-w-[120px] sm:min-w-[200px] flex items-center overflow-hidden">
-                          {API_PATHS.map((path, index) => (
-                            <motion.code
-                              key={path}
-                              className="absolute text-xs sm:text-sm lg:text-base font-mono text-blue-400 font-semibold whitespace-nowrap left-0"
-                              initial={false}
+                    <p className={`text-xs sm:text-sm font-medium mb-3 sm:mb-4 flex items-center gap-2 ${
+                      isDarkMode ? 'text-zinc-500' : 'text-zinc-500'
+                    }`}>
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      替换基础 URL 即可接入
+                    </p>
+
+                    {/* Outer wrapper with glow */}
+                    <div className="relative group/url">
+                      {/* Ambient glow */}
+                      <motion.div
+                        className={`absolute -inset-1 rounded-2xl sm:rounded-3xl blur-xl pointer-events-none ${
+                          isDarkMode
+                            ? 'bg-gradient-to-r from-amber-500/15 via-blue-500/10 to-purple-500/15'
+                            : 'bg-gradient-to-r from-amber-400/10 via-blue-400/8 to-purple-400/10'
+                        }`}
+                        animate={{ opacity: [0.4, 0.7, 0.4] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                      />
+
+                      {/* Main container */}
+                      <div
+                        className={`relative flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-5 rounded-xl sm:rounded-2xl border overflow-hidden backdrop-blur-xl ${
+                          isDarkMode
+                            ? 'bg-[#0f0f14]/90 border-white/[0.08] group-hover/url:border-amber-500/25'
+                            : 'bg-white/80 border-black/[0.08] group-hover/url:border-amber-500/30'
+                        } transition-all duration-500`}
+                      >
+                        {/* Shimmer sweep effect */}
+                        <div
+                          className={`absolute inset-0 z-0 pointer-events-none animate-shimmer ${
+                            isDarkMode
+                              ? 'bg-gradient-to-r from-transparent via-white/[0.04] to-transparent'
+                              : 'bg-gradient-to-r from-transparent via-black/[0.03] to-transparent'
+                          }`}
+                          style={{ width: '40%' }}
+                        />
+
+                        {/* URL content */}
+                        <div className="relative z-10 flex items-center gap-1 sm:gap-2 flex-1 min-w-0">
+                          <code className={`text-[11px] sm:text-sm lg:text-base font-mono tracking-tight whitespace-nowrap flex-shrink-0 ${
+                            isDarkMode ? 'text-zinc-500' : 'text-zinc-500'
+                          }`}>
+                            https://api.ikuncode.cc
+                          </code>
+                          <div className="relative h-5 sm:h-6 flex items-center">
+                            {/* 不可见占位：用最长路径撑开容器宽度 */}
+                            <code className="invisible text-xs sm:text-sm lg:text-base font-mono font-semibold whitespace-nowrap" aria-hidden="true">
+                              {API_PATHS.reduce((a, b) => a.length >= b.length ? a : b)}
+                            </code>
+                            <AnimatePresence mode="wait">
+                              <motion.code
+                                key={API_PATHS[apiPathIndex]}
+                                className="absolute left-0 text-xs sm:text-sm lg:text-base font-mono font-semibold whitespace-nowrap bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 bg-clip-text text-transparent"
+                                initial={{ y: 18, opacity: 0, filter: 'blur(6px)' }}
+                                animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+                                exit={{ y: -18, opacity: 0, filter: 'blur(6px)' }}
+                                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                              >
+                                {API_PATHS[apiPathIndex]}
+                              </motion.code>
+                            </AnimatePresence>
+                          </div>
+                          {/* Blinking cursor */}
+                          <motion.span
+                            className="hidden sm:inline-block w-[2px] h-4 sm:h-5 rounded-full bg-amber-500/70 flex-shrink-0"
+                            animate={{ opacity: [1, 0.2, 1] }}
+                            transition={{ duration: 1, repeat: Infinity, ease: 'steps(2)' }}
+                          />
+                        </div>
+
+                        {/* Path indicator dots */}
+                        <div className="relative z-10 hidden sm:flex items-center gap-1.5 mr-1 sm:mr-2 flex-shrink-0">
+                          {API_PATHS.map((_, i) => (
+                            <motion.div
+                              key={i}
+                              className="rounded-full"
                               animate={{
-                                y: index === apiPathIndex ? 0 : index < apiPathIndex ? -24 : 24,
-                                opacity: index === apiPathIndex ? 1 : 0,
+                                width: i === apiPathIndex ? 12 : 4,
+                                height: 4,
+                                backgroundColor: i === apiPathIndex
+                                  ? '#f59e0b'
+                                  : isDarkMode ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)',
                               }}
-                              transition={{
-                                duration: 0.5,
-                                ease: [0.4, 0, 0.2, 1],
-                              }}
-                            >
-                              {path}
-                            </motion.code>
+                              transition={{ duration: 0.3, ease: 'easeOut' }}
+                            />
                           ))}
                         </div>
+
+                        {/* Copy button */}
+                        <motion.button
+                          type="button"
+                          className={`relative z-10 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex-shrink-0 ${
+                            copied
+                              ? 'bg-emerald-500/15'
+                              : isDarkMode
+                                ? 'bg-white/5 hover:bg-white/10'
+                                : 'bg-black/5 hover:bg-black/10'
+                          } transition-colors duration-300 relative overflow-hidden`}
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.92 }}
+                          aria-label="复制 URL"
+                          onClick={() => {
+                            const text = 'https://api.ikuncode.cc'
+                            const fallbackCopy = () => {
+                              const textarea = document.createElement('textarea')
+                              textarea.value = text
+                              textarea.style.position = 'fixed'
+                              textarea.style.opacity = '0'
+                              document.body.appendChild(textarea)
+                              textarea.select()
+                              document.execCommand('copy')
+                              document.body.removeChild(textarea)
+                              setCopied(true)
+                              setTimeout(() => setCopied(false), 2000)
+                            }
+                            if (navigator.clipboard && window.isSecureContext) {
+                              navigator.clipboard.writeText(text).then(() => {
+                                setCopied(true)
+                                setTimeout(() => setCopied(false), 2000)
+                              }).catch(fallbackCopy)
+                            } else {
+                              fallbackCopy()
+                            }
+                          }}
+                        >
+                          <AnimatePresence mode="wait">
+                            {copied ? (
+                              <motion.div
+                                key="check"
+                                initial={{ scale: 0, rotate: -90 }}
+                                animate={{ scale: 1, rotate: 0 }}
+                                exit={{ scale: 0, rotate: 90 }}
+                                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                              >
+                                <Check size={16} className="text-emerald-500 sm:w-[18px] sm:h-[18px]" />
+                              </motion.div>
+                            ) : (
+                              <motion.div
+                                key="copy"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                exit={{ scale: 0 }}
+                                transition={{ duration: 0.15 }}
+                              >
+                                <Copy size={16} className="opacity-50 sm:w-[18px] sm:h-[18px]" />
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.button>
                       </div>
-                      <motion.button
-                        type="button"
-                        className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex-shrink-0 ${
-                          isDarkMode
-                            ? 'bg-white/5 hover:bg-white/10'
-                            : 'bg-black/5 hover:bg-black/10'
-                        } transition-colors relative`}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        aria-label="复制 URL"
-                        onClick={() => {
-                          navigator.clipboard.writeText('https://api.ikuncode.cc')
-                          setCopied(true)
-                          setTimeout(() => setCopied(false), 2000)
-                        }}
-                      >
-                        <Copy size={16} className="opacity-60 sm:w-[18px] sm:h-[18px]" />
-                        {copied && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-amber-500 text-black text-xs font-bold rounded-lg whitespace-nowrap shadow-lg"
-                          >
-                            已复制！
-                          </motion.div>
-                        )}
-                      </motion.button>
                     </div>
                   </div>
                 </div>
@@ -680,8 +772,7 @@ export default function App() {
                       </p>
                       <p className="pt-2 sm:pt-4 text-zinc-600 whitespace-nowrap">{t.terminal.comment2}</p>
                       <p className="whitespace-nowrap">
-                        <span className="text-zinc-400">$</span> claude{' '}
-                        <span className="text-zinc-500">--fast-mode</span>
+                        <span className="text-zinc-400">$</span> claude
                       </p>
                       <div className="h-3 sm:h-4 w-1 bg-amber-500 animate-pulse inline-block" />
                     </div>
