@@ -1005,7 +1005,7 @@ export default function App() {
                       </td>
                       <td className="py-4 px-4 text-xs opacity-60 leading-relaxed">200K上下文 + 5min缓存，支持非CC客户端</td>
                       <td className="py-4 px-4 opacity-60 leading-relaxed text-xs">
-                        较优质低成本逆向渠道。服务端实现高缓存命中、网络搜索及PDF识别。<span className="text-rose-400">缺点是不能一次性输出太长，遇到"Error writing file"请尝试让cc少量多次编辑文件。</span>
+                        【近期非常不稳定】较优质低成本逆向渠道(Kiro)。服务端实现高缓存命中、网络搜索及PDF识别。
                       </td>
                     </tr>
 
@@ -1025,25 +1025,6 @@ export default function App() {
                       <td className="py-4 px-4 text-xs opacity-60 leading-relaxed">200K上下文 + 5min缓存，支持非CC客户端</td>
                       <td className="py-4 px-4 opacity-60 leading-relaxed text-xs">
                         优质高成本逆向渠道，支持CC所有功能。<span className="text-amber-400">白天速度较慢</span>但缓存命中率极高。
-                      </td>
-                    </tr>
-
-                    {/* CC逆向3 */}
-                    <tr className={`border-b transition-colors ${
-                      isDarkMode ? 'border-white/5 hover:bg-white/[0.02]' : 'border-black/5 hover:bg-black/[0.02]'
-                    }`}>
-                      <td className="py-4 pl-6 pr-4 font-mono text-xs opacity-40">04</td>
-                      <td className="py-4 px-4 font-medium whitespace-nowrap">CC逆向3</td>
-                      <td className="py-4 px-4">
-                        <span className={`inline-flex items-center px-2 py-1 rounded font-mono text-xs whitespace-nowrap ${
-                          isDarkMode ? 'bg-white/5 border border-white/5 text-indigo-300' : 'bg-black/5 border border-black/5 text-indigo-600'
-                        }`}>
-                          1.3 / 1.25 / 1.2
-                        </span>
-                      </td>
-                      <td className="py-4 px-4 text-xs opacity-60 leading-relaxed">1M (Sonnet) 上下文 + 5min缓存，支持非CC客户端</td>
-                      <td className="py-4 px-4 opacity-60 leading-relaxed text-xs">
-                        高质高成本逆向渠道，原生支持CC所有功能。纯度与官Key无差别。
                       </td>
                     </tr>
 
