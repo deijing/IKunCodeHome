@@ -529,7 +529,7 @@ export default function App() {
 
                   <div className="pt-8 sm:pt-10 flex flex-wrap items-center gap-3 sm:gap-4 lg:gap-6">
                     <MagneticButton
-                      href="https://api.ikuncode.cc/console"
+                      href="https://api.ikuncode.cc/dashboard/overview"
                       className={`relative flex items-center gap-2 sm:gap-3 lg:gap-4 group font-semibold tracking-wider text-xs sm:text-sm uppercase px-6 sm:px-8 py-3.5 sm:py-4 backdrop-blur-xl ${
                         isDarkMode
                           ? 'bg-white/[0.08] text-white/90 border border-white/[0.12]'
