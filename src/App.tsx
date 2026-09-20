@@ -923,9 +923,31 @@ export default function App() {
               </motion.div>
             </div>
 
-            {/* 版权信息 */}
+            {/* 公司与版权信息 */}
             <div className="text-center pt-6 sm:pt-8">
               <div className="divider-gradient mb-6 sm:mb-8" />
+              <div className="mx-auto mb-6 flex max-w-2xl flex-col items-center px-2 sm:mb-8">
+                <span
+                  aria-hidden="true"
+                  className="mb-5 h-0.5 w-8 rounded-full bg-amber-500/60"
+                />
+                <p
+                  lang="en"
+                  className={`text-xs sm:text-sm font-medium leading-relaxed tracking-[0.12em] [text-wrap:balance] ${
+                    isDarkMode ? 'text-zinc-300' : 'text-zinc-700'
+                  }`}
+                >
+                  SHANGLV ELEVEN TECHNOLOGY CO., LIMITED
+                </p>
+                <address
+                  lang="en"
+                  className={`mt-3 text-xs sm:text-[13px] not-italic leading-6 tracking-[0.06em] [text-wrap:balance] ${
+                    isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                  }`}
+                >
+                  Room 902, Wing Sing Centre, 9-11 Jupiter Street, Tin Hau, Hong Kong
+                </address>
+              </div>
               <p className="text-[10px] sm:text-xs opacity-30 tracking-[0.15em] uppercase">
                 {t.footer.copyright}
               </p>
